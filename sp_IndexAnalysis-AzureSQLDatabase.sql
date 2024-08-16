@@ -232,9 +232,9 @@ BEGIN
              [included_column_count] SMALLINT ,
              [key_columns] NVARCHAR(MAX) ,
              [data_columns] NVARCHAR(MAX) ,
-             [indexed_columns_ids] NVARCHAR(1024) ,
-             [included_column_ids] NVARCHAR(1024) ,
-             [distinct_indexed_columns_ids] NVARCHAR(1024)
+             [indexed_columns_ids] NVARCHAR(MAX) ,
+             [included_column_ids] NVARCHAR(MAX) ,
+             [distinct_indexed_columns_ids] NVARCHAR(MAX)
             );
 
  
