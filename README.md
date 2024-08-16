@@ -30,6 +30,9 @@ The information in the DMVs is gathered from when the SQL Server service last st
 + index_pros: list of reasons that indicate the benefits provided by the index 
 	+ FK: The index schema maps to a foreign key 
 	+ UQ: Index is a unique constraint 
+	+ `$,$$,$$$,$$$+` : Indicates the ratio of read to writes uses in execution plans.  The higher the ratio the more dollar signs; this should correlate to more benefits than cost incurred by the index.
++ index_cons: list of cons for given index:
+	+ NOCMP - no compression
 	+ `$,$$,$$$,$$$+` : Indicates the ratio of write to read uses in execution plans.  The higher the ratio the more dollar signs; this should correlate to more cost incurred by the index.
 + DSB: Index is disabled.  These should be enabled or removed.
 + filegroup: file group that the index is located.
