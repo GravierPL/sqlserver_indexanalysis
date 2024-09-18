@@ -15,7 +15,9 @@ The information in the DMVs is gathered from when the SQL Server service last st
 + @IncludeMissingIndexes(BIT): Identifies whether to include missing indexes in the output
 + @IncludeMissingFKIndexes(BIT): Identifies whether to include missing foreign key indexes in the output
 + @Output(VARCHAR(20)): Determines the output results from the stored procedure. The available values are:
-	+ DETAILED: All results from the index analysis
+	+ DUMP: Default
+  	+ DETAILED: All results from the index analysis
+ 	+ REALIGN: Only tables with indexes with possibilty to REALIGN - check index_action below
 	+ DUPLICATE: Index results for deplicate indexes
 	+ OVERLAPPING: Index results for overlapping indexes
 
