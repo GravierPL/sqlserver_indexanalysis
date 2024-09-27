@@ -18,6 +18,7 @@ The information in the DMVs is gathered from when the SQL Server service last st
 	+ DUMP: Default
   	+ DETAILED: All results from the index analysis
  	+ REALIGN: Only tables with indexes with possibilty to REALIGN - check index_action below
+  	+ CREATE: Only tables with indexes with possibilty to CREATE
 	+ DUPLICATE: Index results for deplicate indexes
 	+ OVERLAPPING: Index results for overlapping indexes
 
