@@ -1219,7 +1219,7 @@ BEGIN
                     FROM    [#IndexStatistics]
                     WHERE   [object_id] IN (SELECT  [object_id]
                                             FROM    [#IndexStatistics]
-                                            WHERE   [index_action] IN ('CREATE')
+                                            WHERE   [index_action] = 'CREATE')
                     ORDER BY SUM([user_total]) OVER (PARTITION BY [object_id]) DESC ,
                             [object_id] ,
                             COALESCE([user_total], -1) DESC ,
