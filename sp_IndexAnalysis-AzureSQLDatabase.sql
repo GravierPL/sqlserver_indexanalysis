@@ -73,7 +73,7 @@ BEGIN
         IF OBJECT_ID('tempdb..#ForeignKeys') IS NOT NULL
             DROP TABLE [#ForeignKeys];
 				
-        IF @Output NOT IN ('DUMP', 'DETAILED', 'DUPLICATE', 'OVERLAPPING', 'REALIGN')
+        IF @Output NOT IN ('DUMP', 'DETAILED', 'DUPLICATE', 'OVERLAPPING', 'REALIGN', 'CREATE')
             RAISERROR('The value "%s" provided for the @Output parameter is not valid',16,1,@Output);
  
         SELECT  @DB_ID = DB_ID() ,
@@ -1170,6 +1170,56 @@ BEGIN
                     WHERE   [object_id] IN (SELECT  [object_id]
                                             FROM    [#IndexStatistics]
                                             WHERE   [index_action] = 'REALIGN')
+                    ORDER BY SUM([user_total]) OVER (PARTITION BY [object_id]) DESC ,
+                            [object_id] ,
+                            COALESCE([user_total], -1) DESC ,
+                            COALESCE([user_updates], -1) DESC ,
+                            COALESCE([index_id], 999);
+                END;
+		ELSE
+                IF @Output = 'CREATE'
+                BEGIN
+                    SELECT  [index_action] ,
+                            [object_name] ,
+                            [index_name] ,
+                            [partition_number] ,
+                            [type_desc] ,
+                            [index_pros] ,
+                            [index_cons] ,
+                            [index_row_count] ,
+                            [user_total] ,
+                            [user_seeks] ,
+                            [user_scans] ,
+                            [user_lookups] ,
+                            [user_updates] ,
+                            [user_total_pct] ,
+                            [size_in_mb] ,
+                            [buffered_mb] ,
+                            [table_buffered_mb] ,
+                            [buffered_percent] ,
+                            [indexed_columns] ,
+                            [included_columns] ,
+                            [is_primary_key] ,
+                            [is_unique] ,
+                            [is_disabled] ,
+                            [has_unique] ,
+                            [read_to_update_ratio] ,
+                            [read_to_update] ,
+                            [update_to_read] ,
+                            [row_lock_count] ,
+                            [row_lock_wait_count] ,
+                            [row_lock_wait_in_ms] ,
+                            [row_block_pct] ,
+                            [avg_row_lock_waits_ms] ,
+                            [page_latch_wait_count] ,
+                            [avg_page_latch_wait_ms] ,
+                            [page_io_latch_wait_count] ,
+                            [avg_page_io_latch_wait_ms] ,
+                            [read_operations]
+                    FROM    [#IndexStatistics]
+                    WHERE   [object_id] IN (SELECT  [object_id]
+                                            FROM    [#IndexStatistics]
+                                            WHERE   [index_action] IN ('CREATE')
                     ORDER BY SUM([user_total]) OVER (PARTITION BY [object_id]) DESC ,
                             [object_id] ,
                             COALESCE([user_total], -1) DESC ,
